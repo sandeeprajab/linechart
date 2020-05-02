@@ -1,45 +1,55 @@
 import React, { Fragment } from 'react';
 import { AppContext } from './store/AppContext';
 import CSVReader from 'react-csv-reader';
-import { Alert } from 'react-bootstrap';
 import '../node_modules/react-linechart/dist/styles.css';
-import Jumbotron from 'react-bootstrap/Jumbotron'
+import { Alert } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
+import Jumbotron from 'react-bootstrap/Jumbotron';
 
 const papaparseOptions = {
     header: false,
     dynamicTyping: true,
-    skipEmptyLines: true,  
+    skipEmptyLines: true,
     transformHeader: header =>
         header
             .toLowerCase()
             .replace(/\W/g, '_')
-  
+
 }
-
-const parseSeriesData = (uploadedData) => {
-    let parsedData = [];
-
-    if(Array.isArray(uploadedData)){
-        uploadedData.forEach(rows => {
-            let record = [];
-            let series = rows[0];
-
-            for (var i = 1; i < rows.length; i++) {
-                const data = rows[i].split("|");
-                record.push({x: data[0], y: data[1]});
-            }
-            
-            parsedData.push({points: record, name: series});
-        });
-    }
-    else{
-
-    }
-}
-
 
 function FileUploader() {
     const { state, dispatch } = React.useContext(AppContext);
+
+
+    const parseSeriesData = (uploadedData) => {
+        let parsedData = [];
+        let colorChoice = 0;
+        if (Array.isArray(uploadedData)) {
+            uploadedData.forEach(rows => {
+                let record = [];
+                let series = rows[0];
+                if (rows.length > 0) {
+                    for (var i = 1; i < rows.length; i++) {
+                        if (rows[i] != null) {
+                            const data = rows[i].split("|");
+                            record.push({ x: data[0], y: data[1] });
+                        }
+                    }
+                }
+
+                // sort records based on series year
+                record.sort((a, b) => a.x - b.x);
+
+                parsedData.push({ points: record, name: series, color: state.colors[colorChoice] });
+                colorChoice++;
+            });
+        }
+        else {
+            dispatch({ type: "UPDATE_FILE_VALIDATION", payload: false });
+        }
+        return parsedData;
+    }
+
 
     const onFileUpload = (data, fileInfo) => {
         console.log(data, fileInfo);
@@ -61,7 +71,11 @@ function FileUploader() {
 
         // if file is valid, update to store
         if (fileValid) {
-            dispatch({ type: "UPDATE_GRAPH_DATA", payload: data });
+            const parsedData = parseSeriesData(data);
+
+            console.log("parsedData: ", parsedData);
+
+            dispatch({ type: "UPDATE_GRAPH_DATA", payload: parsedData });
         }
     };
 
@@ -90,9 +104,22 @@ function FileUploader() {
                     inputStyle={{ color: 'red' }}
                 />
 
+                <br />
+                <Button variant="light"
+                    type="reset"
+                    value="Reset"
+                    onClick={() => { window.location.reload(); }}
+                >
+                    Reset
+                </Button>
+                &nbsp;
+                <Button variant="dark"
+                    disabled={!state.fileDetails.fileUploaded && !state.fileDetails.isValid}
+                    onClick={() => { dispatch({ type: "UPDATE_PLOT_CHART", payload: true }); }}
+                >
+                    Plot Chart
+                </Button>
             </Jumbotron>
-
-
         </Fragment>
     );
 

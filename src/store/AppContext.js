@@ -3,8 +3,7 @@ import * as React from "react";
 const AppContext = React.createContext();
 
 const initialState = {
-    count: 10,
-    currentColor: "#bada55",
+    colors: ["steelblue", "red", "green", "orange", "pink"],
     fileDetails: {
         fileName: "",
         fileType: "",
@@ -12,23 +11,34 @@ const initialState = {
         isValid: false,
         fileUploaded: false,
     },
-    graphData: {
-
-    },   
-
+    graphData: {},
+    plotChart: false,
 };
 
 const reducer = (state, action) => {
     switch (action.type) {
         case "RESET":
             return initialState;
-            
+
         case "UPDATE_FILE_DETAILS":
             return { ...state, fileDetails: action.payload };
 
+        case "UPDATE_FILE_VALIDATION":
+            return {
+                ...state,
+                fileDetails: {
+                    ...state.fileDetails,
+                    isValid: false
+                }
+            };
+
+        case "UPDATE_PLOT_CHART":
+            return { ...state, plotChart: action.payload};
+        
         case "UPDATE_GRAPH_DATA":
-            return { ...state, graphData: action.payload };       
-                  
+            console.log("UPDATE_GRAPH_DATA");
+            return { ...state, graphData: action.payload };
+
         default: return initialState;
     }
 };

@@ -3,6 +3,7 @@ import { Navbar } from 'react-bootstrap';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import FileUploader from './FileUploader';
+import SeriesPlot from './SeriesPlot';
 
 function App() {
 
@@ -21,7 +22,8 @@ function App() {
       </Navbar>
       <br />
       <FileUploader />
-
+      <br />
+      <SeriesPlot />
     </React.Fragment>
   );
 }
