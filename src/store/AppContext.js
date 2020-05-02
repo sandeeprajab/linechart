@@ -13,6 +13,7 @@ const initialState = {
     },
     graphData: {},
     plotChart: false,
+    savedToServer: false,
 };
 
 const reducer = (state, action) => {
