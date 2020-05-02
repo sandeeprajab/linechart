@@ -1,25 +1,28 @@
 import React from 'react';
-import logo from './logo.svg';
+import { Navbar } from 'react-bootstrap';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import FileUploader from './FileUploader';
 
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <React.Fragment>
+      <Navbar bg="dark" variant="dark">
+        <Navbar.Brand href="#">
+          <img
+            src="FissionLabs.jpg"
+            width="30"
+            height="30"
+            className="d-inline-block align-top"
+            alt="FissionLabs"
+          />
+        </Navbar.Brand>
+      </Navbar>
+      <br />
+      <FileUploader />
+
+    </React.Fragment>
   );
 }
 
