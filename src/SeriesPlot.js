@@ -10,8 +10,8 @@ function SeriesPlot() {
             {
                 state.plotChart &&
                 <LineChart
-                    width={600}
-                    height={400}
+                    width={1000}
+                    height={600}
                     xLabel={'year'}
                     yLabel={'score'}
                     //margins= { top: 50, right: 20, bottom: 50, left: 55 }

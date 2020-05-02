@@ -4,6 +4,9 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import FileUploader from './FileUploader';
 import SeriesPlot from './SeriesPlot';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col';
 
 function App() {
 
@@ -11,19 +14,20 @@ function App() {
     <React.Fragment>
       <Navbar bg="dark" variant="dark">
         <Navbar.Brand href="#">
-          <img
-            src="FissionLabs.jpg"
-            width="30"
-            height="30"
-            className="d-inline-block align-top"
-            alt="FissionLabs"
-          />
+          FissionLabs
         </Navbar.Brand>
       </Navbar>
-      <br />
       <FileUploader />
-      <br />
-      <SeriesPlot />
+      
+      <Container>
+        <Row className="justify-content-md-center">
+          <Col>
+            <SeriesPlot />
+          </Col>
+        </Row>
+      </Container>
+      <br/>
+     
     </React.Fragment>
   );
 }

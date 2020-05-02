@@ -3,7 +3,7 @@ import * as React from "react";
 const AppContext = React.createContext();
 
 const initialState = {
-    colors: ["steelblue", "red", "green", "orange", "pink"],
+    colors: ["magenta", "red", "green", "orange", "pink", "blue", "indigo", "violet"],
     fileDetails: {
         fileName: "",
         fileType: "",
