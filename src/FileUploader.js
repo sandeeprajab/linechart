@@ -22,6 +22,24 @@ function FileUploader() {
     const { state, dispatch } = React.useContext(AppContext);
 
     //dispatch({ type: "RESET" });
+    const sendData = () => {
+        console.log("Sending data to server", JSON.stringify(state.graphData));
+        // mock URL
+        const url = "https://fusionlabslinechart.free.beeceptor.com";
+        (async () => {
+            let response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify(state.graphData)
+            });
+
+            let result = await response;
+            console.log(result);
+
+        })();
+    }
 
     const parseSeriesData = (uploadedData) => {
         let parsedData = [];
@@ -93,7 +111,7 @@ function FileUploader() {
                     <Alert.Heading>Upload file is an invalid file.</Alert.Heading>
                 </Alert>
             }
-           
+
             <Jumbotron>
                 <h1>Series Plotter</h1>
                 <br />
@@ -124,6 +142,16 @@ function FileUploader() {
                         Plot Chart
                 </Button>
                 }
+                &nbsp;
+                {state.fileDetails.fileUploaded && state.fileDetails.isValid &&
+                    <Button variant="dark"
+                        disabled={!state.fileDetails.fileUploaded && !state.fileDetails.isValid}
+                        onClick={() => { sendData() }}
+                    >
+                        Send to Server
+                </Button>
+                }
+
             </Jumbotron>
         </Fragment>
     );
