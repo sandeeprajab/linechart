@@ -52,7 +52,10 @@ function FileUploader() {
                     for (var i = 1; i < rows.length; i++) {
                         if (rows[i] != null) {
                             const data = rows[i].split("|");
-                            record.push({ x: data[0], y: data[1] });
+                            if(data[0] != null && data[1] != null && 
+                                !isNaN(data[0]) && !isNaN(data[1])){
+                                record.push({ x: data[0], y: data[1] });
+                            }                            
                         }
                     }
                 }
